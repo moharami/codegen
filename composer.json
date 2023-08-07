@@ -1,0 +1,17 @@
+{
+    "name": "moharamiamir/codegen",
+    "description": "generate code for you",
+    "autoload": {
+        "psr-4": {
+            "Moharamiamir\\Codegen\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Amir",
+            "email": "a.moharami@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.0.1"
+    }}
