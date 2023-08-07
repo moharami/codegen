@@ -72,15 +72,7 @@ class Create
         return ucwords(Pluralizer::singular($name));
     }
 
-    /**
-     * Get the full path of generate class
-     *
-     * @return string
-     */
-    public function getSourceFilePath()
-    {
-        return base_path('app/Models') . DIRECTORY_SEPARATOR . $this->getSingularClassName($this->modelName) . '.php';
-    }
+
 
     /**
      * Build the directory for the class if necessary.

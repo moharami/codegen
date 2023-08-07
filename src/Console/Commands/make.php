@@ -5,6 +5,7 @@ namespace Moharamiamir\codegen\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use function Laravel\Prompts\text;
+use function Laravel\Prompts\confirm;
 
 
 class make extends Command
@@ -50,10 +51,17 @@ class make extends Command
      */
     public function handle()
     {
+        $fields = [];
         $name =  text('What should the model be named?');
-        $
+        while(confirm(
+            label: 'Do you want add field?',
 
-        $model = new CreateModel($name);
+        )){
+            $fields[] =  text('Enter Your Field','E.g title');
+
+        }
+
+        $model = new CreateModel($name, $fields);
         $this->info($model->make());
     }
 

@@ -3,20 +3,22 @@
 namespace Moharamiamir\codegen\Console\Commands;
 
 use Illuminate\Filesystem\Filesystem;
+
 class CreateModel extends Create
 {
+    protected string $stub_name = 'model.stub';
+    protected string $fillable_name = 'fillable.stub';
+    protected string $destinationPath;
+    protected array $fields;
     private mixed $modelName;
     private string $path = 'app/Models';
 
-    protected string $stub_name = 'model.stub';
-    protected string $destinationPath;
-
-
-    public function __construct($name)
+    public function __construct($name, array $fields)
     {
         parent::__construct();
         $this->modelName = $this->getSingularClassName($name);
         $this->destinationPath = base_path($this->path);
+        $this->fields = $fields;
     }
 
     public function make()
@@ -35,7 +37,7 @@ class CreateModel extends Create
      */
     public function getSourceFilePath()
     {
-        return  $this->destinationPath. DIRECTORY_SEPARATOR .$this->getSingularClassName($this->modelName) . '.php';
+        return $this->destinationPath . DIRECTORY_SEPARATOR . $this->getSingularClassName($this->modelName) . '.php';
     }
 
 
@@ -44,9 +46,21 @@ class CreateModel extends Create
         return [
             'namespace' => 'App\\Models',
             'class' => $this->getSingularClassName($this->modelName),
+            'fillable' => $this->fillable(),
         ];
     }
 
+    private function fillable()
+    {
+        if ($this->fields){
+            return $this->getStubContents($this->getStubFillabePath(), $this->fillableVariable());
+        }
+    }
+
+    public function getStubFillabePath()
+    {
+        return parent::getStubPath() . $this->fillable_name;
+    }
 
     /**
      * Return the stub file path
@@ -56,6 +70,21 @@ class CreateModel extends Create
     public function getStubPath()
     {
         return parent::getStubPath() . $this->stub_name;
+    }
+
+    private function fillableVariable()
+    {
+        $content ='';
+        foreach ($this->fields as $key => $field) {
+            $content .= "'" . $field . "',";
+            if ($key !== count($this->fields) - 1) {
+                $content .= "\n\t\t";
+            }
+        }
+
+        return [
+            'fill' => $content,
+        ];
     }
 
 
