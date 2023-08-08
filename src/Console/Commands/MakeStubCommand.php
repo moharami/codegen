@@ -24,11 +24,17 @@ abstract class MakeStubCommand extends GeneratorCommand
         }
 
         $this->modelName = $this->getSingularClassName($this->name);
-
+        $o = (new getfillable($this->fields));
         $path = $this->getDestinationPath();
         $this->makeDirectory($path);
         $contents = $this->getContent();
         $this->writeFile($path, $contents);
+    }
+
+
+    protected function getContent(): array|bool|string
+    {
+        return $this->getStubContents($this->getStubPath(), $this->getStubVariables());
     }
 
     protected function writeFile($path, $contents)
