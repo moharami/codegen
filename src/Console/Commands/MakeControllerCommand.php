@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 class MakeControllerCommand extends MakeStubCommand
 {
     protected string $path = 'app/Http/Controllers/Api/V1';
-    protected string $suffixFilename = 'Controllers';
+    protected string $suffixFilename = 'Controller';
 
     protected string $stub_name = 'controller.model.api.stub';
 
@@ -17,7 +17,7 @@ class MakeControllerCommand extends MakeStubCommand
     protected string $rootNamespace = 'App\\Http\\Controllers\\Api\\BaseController';
     protected string $requestbase = 'App\\Http\\Requests\\';
     private string $modelUpdateRequest = 'UpdateRequest';
-    private string $modelStoreRequest = 'SaveRequest';
+    private string $modelStoreRequest = 'StoreRequest';
 
 
     public function getDestinationPath(): string

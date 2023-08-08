@@ -8,7 +8,6 @@ use function Laravel\Prompts\text;
 use function Laravel\Prompts\confirm;
 
 
-
 class make extends Command
 {
     /**
@@ -31,9 +30,8 @@ class make extends Command
      * @var Filesystem
      */
     protected $files;
-    private array $fields =[];
     protected string $model;
-
+    private array $fields = [];
 
     /**
      * Execute the console command.
@@ -49,13 +47,12 @@ class make extends Command
         }
 
 
-
-
-    $files = app()->make(Filesystem::class);
+        $files = app()->make(Filesystem::class);
         $commands = [
-            new MakeModelCommand($files,$this->model, $this->fields),
-            new MakeControllerCommand($files,$this->model, $this->fields),
-            new MakeSaveRequestCommand(),
+            new MakeModelCommand($files, $this->model, $this->fields),
+            new MakeControllerCommand($files, $this->model, $this->fields),
+            new MakeSaveRequestCommand($files, $this->model, $this->fields),
+            new MakeUpdateRequestCommand($files, $this->model, $this->fields),
 //            new MakeFactoryCommand(),
         ];
 

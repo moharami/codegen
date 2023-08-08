@@ -2,12 +2,12 @@
 
 namespace Moharamiamir\codegen\Console\Commands;
 
-class MakeSaveRequestCommand extends MakeStubCommand
+class MakeUpdateRequestCommand extends MakeStubCommand
 {
 
     protected string $path = 'app/Http/Requests';
     protected string $namespace = 'App\\Http\\Requests';
-    protected string $suffixFilename = 'StoreRequest';
+    protected string $suffixFilename = 'UpdateRequest';
     protected string $stub_name = 'request.stub';
 
 
