@@ -8,6 +8,7 @@ use function Laravel\Prompts\text;
 use function Laravel\Prompts\confirm;
 
 
+
 class make extends Command
 {
     /**
@@ -30,18 +31,31 @@ class make extends Command
      * @var Filesystem
      */
     protected $files;
+    private array $fields =[];
+    protected string $model;
 
 
     /**
      * Execute the console command.
      */
     public function handle()
-    {        $fields = [];
+    {
+
+        $this->model = text('Enter Your Model');
+        while (confirm(
+            label: 'Do you want add fields?',
+        )) {
+            $this->fields[] = text('Enter Your Field', 'E.g title');
+        }
+
+
+
 
     $files = app()->make(Filesystem::class);
         $commands = [
-            new MakeModelCommand($files),
-//            new MakeMigrationCommand(),
+            new MakeModelCommand($files,$this->model, $this->fields),
+            new MakeControllerCommand($files,$this->model, $this->fields),
+            new MakeSaveRequestCommand(),
 //            new MakeFactoryCommand(),
         ];
 

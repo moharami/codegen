@@ -2,13 +2,12 @@
 
 namespace Moharamiamir\codegen\Console\Commands;
 
-
-class MakeModelCommand extends MakeStubCommand
+class MakeSaveRequestCommand
 {
 
-    protected string $path = 'app/Models';
+    protected string $path = 'app/Http/Requests';
     protected string $suffixFilename = '';
-    protected string $stub_name = 'model.stub';
+    protected string $stub_name = 'request.stub';
 
 
     public function getDestinationPath(): string

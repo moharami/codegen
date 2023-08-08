@@ -3,6 +3,7 @@
 namespace Moharamiamir\codegen\Console\Commands;
 
 use Illuminate\Console\GeneratorCommand;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Pluralizer;
 use function Laravel\Prompts\confirm;
 use function Laravel\Prompts\text;
@@ -10,21 +11,20 @@ use function Laravel\Prompts\text;
 abstract class MakeStubCommand extends GeneratorCommand
 {
 
-    public array $fields;
+    public array $fields =[];
 
     protected string $modelName;
 
+    public function __construct(Filesystem $files, $name, $fields)
+    {
+        parent::__construct($files);
+        $this->name = $name;
+        $this->fields = $fields;
+        $this->modelName = $this->getSingularClassName($this->name);
+    }
+
     public function handle()
     {
-        $this->name = text('Enter Your Model');
-        while (confirm(
-            label: 'Do you want add field?',
-        )) {
-            $this->fields[] = text('Enter Your Field', 'E.g title');
-        }
-
-        $this->modelName = $this->getSingularClassName($this->name);
-        $o = (new getfillable($this->fields));
         $path = $this->getDestinationPath();
         $this->makeDirectory($path);
         $contents = $this->getContent();

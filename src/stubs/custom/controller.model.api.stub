@@ -1,0 +1,67 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ namespacedModel }};
+use {{ rootNamespace }};
+use {{ namespacedSaveRequests }};
+use {{ namespacedUpdateRequests }};
+
+class {{ class }}Controller extends BaseController
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return JsonResponse
+     */
+    public function index()
+    {
+
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param UserStoreRequest $request
+     * @return JsonResponse
+     * @throws ValidationException
+     */
+    public function store({{ storeRequest }} $request)
+    {
+
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param User $user
+     * @return JsonResponse
+     */
+    public function show({{ model }} ${{ modelVariable }})
+    {
+
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param UserUpdateRequest $request
+     * @param User $user
+     * @return JsonResponse
+     */
+    public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }})
+    {
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param Attachment $attachment
+     * @return JsonResponse
+     */
+    public function destroy({{ model }} ${{ modelVariable }})
+    {
+
+    }
+}
