@@ -30,41 +30,26 @@ class make extends Command
      * @var Filesystem
      */
     protected $files;
-    private $modelName;
-
-    /**
-     * Create a new command instance.
-     * @param Filesystem $files
-     */
-    public function __construct(Filesystem $files)
-    {
-        parent::__construct();
-
-        $this->files = $files;
-    }
-
-
 
 
     /**
      * Execute the console command.
      */
     public function handle()
-    {
-        $fields = [];
-        $name =  text('What should the model be named?');
-        while(confirm(
-            label: 'Do you want add field?',
+    {        $fields = [];
 
-        )){
-            $fields[] =  text('Enter Your Field','E.g title');
+    $files = app()->make(Filesystem::class);
+        $commands = [
+            new MakeModelCommand($files),
+//            new MakeMigrationCommand(),
+//            new MakeFactoryCommand(),
+        ];
 
+        foreach ($commands as $command) {
+            $command->handle();
         }
 
-        $model = new CreateModel($name, $fields);
-        $this->info($model->make());
+        $this->info('done');
     }
-
-
 
 }
