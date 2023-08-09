@@ -6,6 +6,7 @@ use {{ namespacedModel }};
 use {{ rootNamespace }};
 use {{ namespacedSaveRequests }};
 use {{ namespacedUpdateRequests }};
+use Illuminate\Http\JsonResponse;
 
 class {{ class }}Controller extends BaseController
 {
@@ -22,9 +23,8 @@ class {{ class }}Controller extends BaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param UserStoreRequest $request
+     * @param {{ storeRequest }} $request
      * @return JsonResponse
-     * @throws ValidationException
      */
     public function store({{ storeRequest }} $request)
     {
@@ -34,7 +34,7 @@ class {{ class }}Controller extends BaseController
     /**
      * Display the specified resource.
      *
-     * @param User $user
+     * @param {{ model }} ${{ modelVariable }}
      * @return JsonResponse
      */
     public function show({{ model }} ${{ modelVariable }})
@@ -45,8 +45,8 @@ class {{ class }}Controller extends BaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param UserUpdateRequest $request
-     * @param User $user
+     * @param {{ updateRequest }} $request
+     * @param {{ model }} ${{ modelVariable }}
      * @return JsonResponse
      */
     public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }})
@@ -57,7 +57,7 @@ class {{ class }}Controller extends BaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param Attachment $attachment
+     * @param {{ model }} ${{ modelVariable }}
      * @return JsonResponse
      */
     public function destroy({{ model }} ${{ modelVariable }})
