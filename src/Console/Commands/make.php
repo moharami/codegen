@@ -58,7 +58,7 @@ class make extends Command
             new MakeModelCommand($files, $this->model, $this->fields),
             new MakeControllerCommand($files, $this->model, $this->fields),
             new MakeSaveRequestCommand($files, $this->model, $this->fields),
-//            new MakeUpdateRequestCommand($files, $this->model, $this->fields),
+            new MakeUpdateRequestCommand($files, $this->model, $this->fields),
 //            new MakeFactoryCommand(),
         ];
 

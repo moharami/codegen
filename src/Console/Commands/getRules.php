@@ -6,31 +6,51 @@ use function Laravel\Prompts\multiselect;
 use function Laravel\Prompts\select;
 use function Laravel\Prompts\text;
 
-class getRules extends getPart
+class getRules
 {
 
+    private static $instance = null;
+    private static $input;
+    private static  string $output;
 
-    protected string $stub_name = 'fillable.stub';
-
-
-    protected function output()
+    private function __construct()
     {
-        $output = '';
-        foreach ($this->input as $input) {
-            $output .= $this->makeRule($input);
-        }
-        $remove =  "\n\t\t\t";
-        $output = substr($output,0,strlen($output) - strlen($remove));
-        $this->output = $output;
-
+        // Private constructor to prevent direct instantiation
     }
 
-    private function makeRule(mixed $input)
+    public static function getInstance()
+    {
+        if (self::$instance == null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOutput(): string
+    {
+        return self::$output;
+    }
+
+    public static function Output()
+    {
+        $output = '';
+        foreach (self::$input as $input) {
+            $output .= self::makeRule($input);
+        }
+        $remove = "\n\t\t\t";
+        $output = substr($output, 0, strlen($output) - strlen($remove));
+        self::$output = $output;
+    }
+
+    private static function makeRule(mixed $input)
     {
         $field = array_keys($input)[0];
         $type = array_values($input)[0];
 
-        return $this->toString([$field => $this->getValidation($field, $type)]);
+        return self::toString([$field => self::getValidation($field, $type)]);
     }
 
     /**
@@ -38,25 +58,23 @@ class getRules extends getPart
      * @param string $type
      * @return string
      */
-    protected function getValidation($field, string $type): string
+    protected static function getValidation($field, string $type): string
     {
-        $validation = multiselect("Validation for $field",
-            $this->validateBaseOnType($type)
-        );
+        $validation = multiselect("Validation for $field", self::validateBaseOnType($type));
 
         if (in_array('min', $validation)) {
             $size = text("min size:$field ", 'E.g 5');
-            $validation = $this->replace('min', $size, $validation);
+            $validation = self::replace('min', $size, $validation);
         }
 
         if (in_array('max', $validation)) {
             $size = text("max size:$field ", 'E.g 255');
-            $validation = $this->replace('max', $size, $validation);
+            $validation = self::replace('max', $size, $validation);
         }
         return implode('|', $validation);
     }
 
-    private function validateBaseOnType(string $type): array
+    private static function validateBaseOnType(string $type): array
     {
         $validationRules = [
             'string' => ['required', 'string', 'max', 'min'],
@@ -69,16 +87,18 @@ class getRules extends getPart
         if (array_key_exists($type, $validationRules)) {
             return $validationRules[$type];
         }
+
+        return [];
     }
 
-    private function replace(string $string, string $size, array $validation)
+    private static function replace(string $string, string $size, array $validation)
     {
         $key = array_search($string, $validation);
         $validation[$key] = $string . ':' . $size;
         return $validation;
     }
 
-    private function toString(array $output): string
+    private static function toString(array $output): string
     {
         $out = '';
         foreach ($output as $key => $item) {
@@ -87,21 +107,11 @@ class getRules extends getPart
         return $out;
     }
 
-    protected function getReplacedContet(): array|bool|string
+    /**
+     * @param mixed $input
+     */
+    public static function setInput(mixed $input): void
     {
-        $contents = $this->stubContent;
-
-        foreach ($this->getStubVariables() as $search => $replace) {
-            $contents = str_replace('{{ ' . $search . ' }}', $replace, $contents);
-        }
-        return $contents;
-    }
-
-    private function commonField(mixed $input)
-    {
-        $commonString = ['name', 'title'];
-        if (in_array($input, $commonString)) {
-            return [$input => 'string|nullable'];
-        }
+        self::$input = $input;
     }
 }

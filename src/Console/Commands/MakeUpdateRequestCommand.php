@@ -25,11 +25,14 @@ class MakeUpdateRequestCommand extends MakeStubCommand
 
     public function getStubVariables(): array
     {
+        getRules::setInput($this->fields);
+        $rules = getRules::getInstance();
+        $output = $rules->getOutput();
+
         return [
-
             'class' => $this->getSingularClassName($this->modelName) . $this->suffixFilename,
-            'namespace' => $this->namespace
-
+            'namespace' => $this->namespace,
+            'rules' => $output,
         ];
     }
 }
