@@ -4,7 +4,9 @@ namespace Moharamiamir\codegen\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use function Laravel\Prompts\multiselect;
 use function Laravel\Prompts\text;
+use function Laravel\Prompts\select;
 use function Laravel\Prompts\confirm;
 
 
@@ -43,7 +45,11 @@ class make extends Command
         while (confirm(
             label: 'Do you want add fields?',
         )) {
-            $this->fields[] = text('Enter Your Field', 'E.g title');
+            $field = text('Enter Your Field', 'E.g title');
+            $type = select('Type Of filed',
+                ['string', 'number', 'date', 'file', 'boolean']);
+
+            $this->fields[] = [$field => $type];
         }
 
 
@@ -52,7 +58,7 @@ class make extends Command
             new MakeModelCommand($files, $this->model, $this->fields),
             new MakeControllerCommand($files, $this->model, $this->fields),
             new MakeSaveRequestCommand($files, $this->model, $this->fields),
-            new MakeUpdateRequestCommand($files, $this->model, $this->fields),
+//            new MakeUpdateRequestCommand($files, $this->model, $this->fields),
 //            new MakeFactoryCommand(),
         ];
 
@@ -62,5 +68,8 @@ class make extends Command
 
         $this->info('done');
     }
+
+
+
 
 }

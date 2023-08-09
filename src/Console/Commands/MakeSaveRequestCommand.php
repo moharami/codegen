@@ -26,10 +26,9 @@ class MakeSaveRequestCommand extends MakeStubCommand
     public function getStubVariables(): array
     {
         return [
-
             'class' => $this->getSingularClassName($this->modelName) . $this->suffixFilename,
-            'namespace' => $this->namespace
-
+            'namespace' => $this->namespace,
+            'rules' => (new getRules($this->fields))->getOutput(),
         ];
     }
 }

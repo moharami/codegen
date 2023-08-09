@@ -39,11 +39,9 @@ class getfillable extends getPart
     {
         $content = '';
         foreach ($this->input as $key => $field) {
-            $content .= "'" . $field . "',";
-            if ($key !== count($this->input) - 1) {
-                $content .= "\n\t\t";
-            }
+            $content .= "'" . $key . "',";
         }
+        $content .= "\n\t\t";
         return $content;
     }
 
