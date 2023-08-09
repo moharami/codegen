@@ -37,19 +37,16 @@ class getRules
     public static function Output()
     {
         $output = '';
-        foreach (self::$input as $input) {
-            $output .= self::makeRule($input);
+        foreach (self::$input as $item => $type) {
+            $output .= self::makeRule($item, $type);
         }
         $remove = "\n\t\t\t";
         $output = substr($output, 0, strlen($output) - strlen($remove));
         self::$output = $output;
     }
 
-    private static function makeRule(mixed $input)
+    private static function makeRule($field, mixed $type)
     {
-        $field = array_keys($input)[0];
-        $type = array_values($input)[0];
-
         return self::toString([$field => self::getValidation($field, $type)]);
     }
 
@@ -76,12 +73,13 @@ class getRules
 
     private static function validateBaseOnType(string $type): array
     {
+        $type = self::getValidaitontype($type);
         $validationRules = [
             'string' => ['required', 'string', 'max', 'min'],
-            'number' => ['required', 'numeric', 'integer'],
+            'integer' => ['required', 'numeric', 'integer'],
             'date' => [],
             'file' => [],
-            'boolean' => [],
+            'boolean' => ['required'],
         ];
 
         if (array_key_exists($type, $validationRules)) {
@@ -102,7 +100,7 @@ class getRules
     {
         $out = '';
         foreach ($output as $key => $item) {
-            $out .= '"' . $key . '"' . ' => ' . '"' . $item . '"' . ",\n\t\t\t";
+            $out .= '"' . $key . "'" . ' => ' . "'" . $item . '"' . ",\n\t\t\t";
         }
         return $out;
     }
@@ -113,5 +111,23 @@ class getRules
     public static function setInput(mixed $input): void
     {
         self::$input = $input;
+    }
+
+    private static function getValidaitontype(string $type)
+    {
+
+        $assign = [
+            'string'=>'string,longText,mediumText,text,tinyText,char',
+            'integer'=>'bigInteger,integer, smallInteger,unsignedBigInteger,unsignedInteger,unsignedSmallInteger,decimal,double',
+            'date' => 'date,dateTime,dateTimeTz,time',
+            'boolean' => 'boolean',
+        ];
+
+        foreach($assign as $key=> $value){
+            if (str_contains($value,$key)){
+                return $key;
+            }
+        }
+        return 'string';
     }
 }

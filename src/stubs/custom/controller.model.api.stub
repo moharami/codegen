@@ -60,8 +60,11 @@ class {{ class }}Controller extends BaseController
      * @param {{ model }} ${{ modelVariable }}
      * @return JsonResponse
      */
-    public function destroy({{ model }} ${{ modelVariable }})
+    public function destroy({{ model }} ${{ modelVariable }}): JsonResponse
     {
-
+        if (${{ modelVariable }}->delete()) {
+            return $this->success(${{ modelVariable }}->id, __('app.messages.destroy'));
+        }
+        return $this->failed(__('app.errors.destroy'));
     }
 }

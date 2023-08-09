@@ -23,7 +23,7 @@ abstract class MakeStubCommand extends GeneratorCommand
         $this->modelName = $this->getSingularClassName($this->name);
     }
 
-    public function handle()
+    public function handle(): void
     {
         $path = $this->getDestinationPath();
         $this->makeDirectory($path);
@@ -37,7 +37,7 @@ abstract class MakeStubCommand extends GeneratorCommand
         return $this->getStubContents($this->getStubPath(), $this->getStubVariables());
     }
 
-    protected function writeFile($path, $contents)
+    protected function writeFile($path, $contents): string
     {
         if (!$this->files->exists($path)) {
             $this->files->put($path, $contents);
@@ -47,9 +47,14 @@ abstract class MakeStubCommand extends GeneratorCommand
         }
     }
 
-    public function getSingularClassName($name)
+    public function getSingularClassName($name): string
     {
         return ucwords(Pluralizer::singular($name));
+    }
+
+    public function getTableName($name): string
+    {
+        return strtolower(Pluralizer::plural($name));
     }
 
     public function getDestinationPath()
@@ -57,7 +62,7 @@ abstract class MakeStubCommand extends GeneratorCommand
         return $this->path;
     }
 
-    public function getStubContents($stub, $stubVariables = [])
+    public function getStubContents($stub, $stubVariables = []): array|bool|string
     {
         $contents = file_get_contents($stub);
 
@@ -67,19 +72,18 @@ abstract class MakeStubCommand extends GeneratorCommand
         return $contents;
     }
 
-    public function getRootStubPath()
+    public function getRootStubPath(): string
     {
         $theme = 'custom';
         return dirname(__DIR__, 2) . '/stubs/' . $theme . DIRECTORY_SEPARATOR;
-
     }
 
-    public function getStubPath()
+    public function getStubPath(): string
     {
         return $this->getRootStubPath() . $this->stub_name;
     }
 
-    private function fillableVariable()
+    private function fillableVariable(): array
     {
         $content ='';
         foreach ($this->fields as $key => $field) {

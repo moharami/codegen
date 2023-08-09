@@ -2,8 +2,7 @@
 
 namespace Moharamiamir\codegen\Console\Commands;
 
-
-class MakeModelCommand extends MakeStubCommand
+class MakeCollectionCommand
 {
 
     protected string $path = 'app/Models';

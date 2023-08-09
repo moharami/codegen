@@ -46,20 +46,25 @@ class make extends Command
             label: 'Do you want add fields?',
         )) {
             $field = text('Enter Your Field', 'E.g title');
-            $type = select('Type Of filed',
-                ['string', 'number', 'date', 'file', 'boolean']);
+//            $type = select('Type Of filed',
+//                ['string', 'number', 'date', 'file', 'boolean']);
+            $default = $this->setDefault($field);
+            $type = select('Type field',
+                ['boolean', 'bigInteger', 'integer', 'smallInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedSmallInteger', 'decimal', 'double', 'string', 'longText', 'mediumText', 'text', 'tinyText', 'char', 'date', 'dateTime', 'dateTimeTz', 'time'],
+                $default,
+            );
 
-            $this->fields[] = [$field => $type];
+            $this->fields[$field] =$type;
         }
 
 
         $files = app()->make(Filesystem::class);
         $commands = [
+            new MakeMigrationCommand($files, $this->model, $this->fields),
             new MakeModelCommand($files, $this->model, $this->fields),
             new MakeControllerCommand($files, $this->model, $this->fields),
             new MakeSaveRequestCommand($files, $this->model, $this->fields),
             new MakeUpdateRequestCommand($files, $this->model, $this->fields),
-//            new MakeFactoryCommand(),
         ];
 
         foreach ($commands as $command) {
@@ -69,7 +74,16 @@ class make extends Command
         $this->info('done');
     }
 
-
+    private function setDefault(string $fieldName)
+    {
+        if (strpos($fieldName, 'is_') === 0) {
+            return 'boolean';
+        } elseif (strpos($fieldName, '_date') !== false || strpos($fieldName, '_at') !== false) {
+            return 'date';
+        } else {
+            return 'string';
+        }
+    }
 
 
 }
