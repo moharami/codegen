@@ -71,6 +71,8 @@ class make extends Command
             $command->handle();
         }
 
+        $this->call('migrate');
+
         $this->info('done');
     }
 
