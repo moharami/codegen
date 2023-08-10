@@ -2,14 +2,15 @@
 
 namespace Moharamiamir\codegen\Console\Commands;
 
-
-class MakeModelCommand extends MakeStubCommand
+class MakeResourceCommand extends MakeStubCommand
 {
 
-    protected string $path = 'app/Models';
-    protected string $nameSpace= 'App\\Models';
-    protected string $suffixFilename = '';
-    protected string $stub_name = 'model.stub';
+
+    protected string $path = 'app/Http/Resources/V1';
+    protected string $suffixFilename = 'ShowResource';
+    protected string $stub_name = 'resource.stub';
+
+    protected string $nameSpace= 'App\Http\Resources\V1';
 
 
     public function getDestinationPath(): string
@@ -26,8 +27,8 @@ class MakeModelCommand extends MakeStubCommand
     {
         return [
             'namespace' => $this->nameSpace,
-            'class' => $this->getSingularClassName($this->modelName),
-            'fillable' => (new getfillable($this->fields))->getOutput(),
+            'class' => $this->getSingularClassName($this->modelName) .$this->suffixFilename,
+//            'fillable' => (new getfillable($this->fields))->getOutput(),
         ];
     }
 }

@@ -65,6 +65,7 @@ class make extends Command
             new MakeControllerCommand($files, $this->model, $this->fields),
             new MakeSaveRequestCommand($files, $this->model, $this->fields),
             new MakeUpdateRequestCommand($files, $this->model, $this->fields),
+            new MakeResourceCommand($files, $this->model, $this->fields),
         ];
 
         foreach ($commands as $command) {
@@ -72,7 +73,6 @@ class make extends Command
         }
 
         $this->call('migrate');
-
         $this->info('done');
     }
 

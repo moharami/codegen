@@ -6,6 +6,7 @@ use {{ namespacedModel }};
 use {{ rootNamespace }};
 use {{ namespacedSaveRequests }};
 use {{ namespacedUpdateRequests }};
+use App\Http\Resources\V1\{{ model }}ShowResource;
 use Illuminate\Http\JsonResponse;
 
 class {{ class }}Controller extends BaseController
@@ -37,9 +38,9 @@ class {{ class }}Controller extends BaseController
      * @param {{ model }} ${{ modelVariable }}
      * @return JsonResponse
      */
-    public function show({{ model }} ${{ modelVariable }})
+    public function show({{ model }} ${{ modelVariable }}): JsonResponse
     {
-
+        return $this->success(new {{ model }}ShowResource(${{ modelVariable }}));
     }
 
     /**
