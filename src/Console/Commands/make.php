@@ -66,13 +66,15 @@ class make extends Command
             new MakeSaveRequestCommand($files, $this->model, $this->fields),
             new MakeUpdateRequestCommand($files, $this->model, $this->fields),
             new MakeResourceCommand($files, $this->model, $this->fields),
+            new MakeFactoryCommand($files, $this->model, $this->fields),
+            new MakeSeederCommand($files, $this->model, $this->fields),
         ];
 
         foreach ($commands as $command) {
             $command->handle();
         }
 
-        $this->call('migrate');
+//        $this->call('migrate');
         $this->info('done');
     }
 
