@@ -4,6 +4,7 @@ namespace Moharamiamir\codegen\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Pluralizer;
 use function Laravel\Prompts\multiselect;
 use function Laravel\Prompts\text;
 use function Laravel\Prompts\select;
@@ -81,8 +82,12 @@ class make extends Command
         foreach ($commands as $command) {
             $command->handle();
         }
-
+        $modelName = ucwords(Pluralizer::singular($this->model));
         $this->call('migrate');
+        $this->call('db:seed', [
+            '--class' => "$modelName" ."Seeder"
+        ]);
+
         $this->info('done');
     }
 

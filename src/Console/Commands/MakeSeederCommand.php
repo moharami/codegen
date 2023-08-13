@@ -25,7 +25,8 @@ class MakeSeederCommand extends MakeStubCommand
         return [
             'namespace' => $this->nameSpace,
             'class' => $this->getSingularClassName($this->modelName) . $this->suffixFilename,
-//            'fillable' => (new getfillable($this->fields))->getOutput(),
+            'model' => $this->getSingularClassName($this->modelName),
+            'fill' => (new getSeeder($this->modelName))->get(),
         ];
     }
 }

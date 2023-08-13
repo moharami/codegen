@@ -2,14 +2,8 @@
 
 namespace Moharamiamir\codegen\Console\Commands;
 
-class Column
+class Column extends makeArray
 {
-
-    public function __construct($input)
-    {
-        $this->inputs = $input;
-    }
-
     public function get()
     {
         $content = '';
