@@ -38,7 +38,7 @@ class getRules
     {
         $output = '';
         foreach (self::$input as $item => $type) {
-            $output .= self::makeRule($item, $type);
+            $output .= self::makeRule($item, $type['type']);
         }
         $remove = "\n\t\t\t";
         $output = substr($output, 0, strlen($output) - strlen($remove));

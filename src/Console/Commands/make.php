@@ -54,7 +54,15 @@ class make extends Command
                 $default,
             );
 
-            $this->fields[$field] =$type;
+            $integer_modifier = ['nullable', 'unsigned'];
+            $string_modifier = ['nullable', 'comment'];
+            $type_modifier = $type . '_modifier';
+            $modifier = multiselect('additional data', $$type_modifier);
+
+            $this->fields[$field] = [
+                'type' => $type,
+                'modifier' => $modifier
+            ];
         }
 
 
@@ -74,7 +82,7 @@ class make extends Command
             $command->handle();
         }
 
-//        $this->call('migrate');
+        $this->call('migrate');
         $this->info('done');
     }
 

@@ -28,7 +28,7 @@ class MakeResourceCommand extends MakeStubCommand
         return [
             'namespace' => $this->nameSpace,
             'class' => $this->getSingularClassName($this->modelName) .$this->suffixFilename,
-//            'fillable' => (new getfillable($this->fields))->getOutput(),
+            'fill' => (new getResource($this->fields))->getOutput(),
         ];
     }
 }

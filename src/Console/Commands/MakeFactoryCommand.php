@@ -29,7 +29,7 @@ class MakeFactoryCommand extends MakeStubCommand
             'factoryNamespace' => $this->nameSpace,
             'factory' => $this->getSingularClassName($this->modelName),
             'namespacedModel'=> "App\\Models\\" . $this->getSingularClassName($this->modelName),
-//            'fillable' => (new getfillable($this->fields))->getOutput(),
+            'fillable' => (new getfillable($this->fields))->getOutput(),
         ];
     }
 

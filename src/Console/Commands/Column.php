@@ -14,10 +14,28 @@ class Column
     {
         $content = '';
         foreach ($this->inputs as $key => $input){
-            $content .= '$table->' . "$input" . '("' ."$key" .'");' ."\n\t\t\t";
+            $type = $input['type'];
+            $content .= '$table->' . "$type" . '("' ."$key" .'")';
+            foreach ($input['modifier'] as $key1 =>$modifier){
+                $content .= $this->makeModifier($modifier);
+            }
+            $content .= ";\n\t\t\t";
         }
         $remove = "\n\t\t\t";
         return substr($content, 0, strlen($content) - strlen($remove));
         
+    }
+
+    private function makeModifier(mixed $modifier)
+    {
+        switch ($modifier){
+            case 'nullable':
+                $output = "->nullable()";
+                break;
+            case 'comment':
+                $output = "->comment('')";
+                break;
+        }
+        return $output;
     }
 }
