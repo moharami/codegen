@@ -3,6 +3,8 @@
 namespace Moharamiamir\codegen\Console\Commands;
 
 
+use Illuminate\Support\Facades\Artisan;
+
 class MakeMigrationCommand extends MakeStubCommand
 {
 
@@ -30,6 +32,11 @@ class MakeMigrationCommand extends MakeStubCommand
             'table'=> $this->getTableName($this->modelName),
             'fields' => (new Column($this->fields))->get(),
         ];
+    }
+
+    public function afterHandle()
+    {
+        Artisan::call('migrate');
     }
 
 

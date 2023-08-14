@@ -47,8 +47,7 @@ class make extends Command
             label: 'Do you want add fields?',
         )) {
             $field = text('Enter Your Field', 'E.g title');
-//            $type = select('Type Of filed',
-//                ['string', 'number', 'date', 'file', 'boolean']);
+
             $default = $this->setDefault($field);
             $type = select('Type field',
                 ['boolean', 'bigInteger', 'integer', 'smallInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedSmallInteger', 'decimal', 'double', 'string', 'longText', 'mediumText', 'text', 'tinyText', 'char', 'date', 'dateTime', 'dateTimeTz', 'time'],
@@ -69,25 +68,21 @@ class make extends Command
 
         $files = app()->make(Filesystem::class);
         $commands = [
-            new MakeMigrationCommand($files, $this->model, $this->fields),
-            new MakeModelCommand($files, $this->model, $this->fields),
-            new MakeControllerCommand($files, $this->model, $this->fields),
-            new MakeSaveRequestCommand($files, $this->model, $this->fields),
-            new MakeUpdateRequestCommand($files, $this->model, $this->fields),
-            new MakeResourceCommand($files, $this->model, $this->fields),
-            new MakeFactoryCommand($files, $this->model, $this->fields),
-            new MakeSeederCommand($files, $this->model, $this->fields),
+//            new MakeMigrationCommand($files, $this->model, $this->fields),
+//            new MakeModelCommand($files, $this->model, $this->fields),
+//            new MakeControllerCommand($files, $this->model, $this->fields),
+//            new MakeSaveRequestCommand($files, $this->model, $this->fields),
+//            new MakeUpdateRequestCommand($files, $this->model, $this->fields),
+//            new MakeResourceCommand($files, $this->model, $this->fields),
+//            new MakeFactoryCommand($files, $this->model, $this->fields),
+//            new MakeSeederCommand($files, $this->model, $this->fields),
+//            new MakeRouteCommand($files, $this->model, $this->fields),
+            new MakeExceptionCommand($files, $this->model, $this->fields),
         ];
 
         foreach ($commands as $command) {
             $command->handle();
         }
-        $modelName = ucwords(Pluralizer::singular($this->model));
-        $this->call('migrate');
-        $this->call('db:seed', [
-            '--class' => "$modelName" ."Seeder"
-        ]);
-
         $this->info('done');
     }
 
