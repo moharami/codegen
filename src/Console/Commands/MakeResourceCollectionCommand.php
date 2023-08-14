@@ -2,11 +2,11 @@
 
 namespace Moharamiamir\codegen\Console\Commands;
 
-class MakeResourceCommand extends MakeStubCommand
+class MakeResourceCollectionCommand extends MakeStubCommand
 {
     protected string $path = 'app/Http/Resources/V1';
-    protected string $suffixFilename = 'ShowResource';
-    protected string $stub_name = 'resource.stub';
+    protected string $suffixFilename = 'Collection';
+    protected string $stub_name = 'collection.stub';
 
     protected string $nameSpace= 'App\Http\Resources\V1';
 
@@ -25,8 +25,8 @@ class MakeResourceCommand extends MakeStubCommand
     {
         return [
             'namespace' => $this->nameSpace,
-            'class' => $this->getSingularClassName($this->modelName) .$this->suffixFilename,
-            'fill' => (new getResource($this->fields))->getOutput(),
+            'model' => $this->getSingularClassName($this->modelName),
         ];
     }
+
 }

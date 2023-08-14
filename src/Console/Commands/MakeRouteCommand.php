@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 
 class MakeRouteCommand extends MakeStubCommand
 {
-    protected string $path = 'app/Exceptions/Handler.php';
+    protected string $path = 'routes/api.php';
     protected string $suffixFilename = '';
     protected string $stub_name = '';
     private string|false $contents;
@@ -34,4 +34,40 @@ class MakeRouteCommand extends MakeStubCommand
         $this->afterHandle();
     }
 
+
+    private function addFile($path, bool|array|string $contents)
+    {
+        $this->files->put($path, $contents);
+    }
+
+    private function addUse()
+    {
+        $lines = explode("\n", $this->contents);
+        $lastUseIndex = $this->lastLineOfUse('use ');
+        $lineToInsert = 'use App\\Http\\Controllers\\Api\\V1\\' . $this->modelName . 'Controller;';
+        array_splice($lines, $lastUseIndex + 1, 0, $lineToInsert);
+        $this->contents = implode("\n", $lines);
+    }
+
+    private function lastLineOfUse($search)
+    {
+        $lines = explode("\n", $this->contents);
+
+        $lastUseIndex = 0;
+        foreach ($lines as $index => $line) {
+            if (strpos($line, $search) === 0) {
+                $lastUseIndex = $index;
+            }
+        }
+        return $lastUseIndex;
+    }
+
+    private function addRoute()
+    {
+        $lines = explode("\n", $this->contents);
+        $lastUseIndex = $this->lastLineOfUse('use ');
+        $lineToInsert = 'use App\\Models\\' . $this->modelName . ';';
+        array_splice($lines, $lastUseIndex + 1, 0, $lineToInsert);
+        $this->contents = implode("\n", $lines);
+    }
 }

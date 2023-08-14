@@ -10,4 +10,24 @@ class {{ class }} extends Model
 {
     use HasFactory;
     {{ fillable }}
+
+        /**
+         * Function to return filters
+         * @return array
+         */
+        public static function getCollectionFilters()
+        {
+            return [];
+        }
+
+        /**
+         * Function to return additional data such as filters & selected fields
+         * @return array
+         */
+        public static function getCollectionAdditionalData($withFilters = false)
+        {
+            return [
+                'filters' => $withFilters ? self::getCollectionFilters() : [],
+            ];
+        }
 }
