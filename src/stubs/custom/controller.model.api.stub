@@ -17,7 +17,7 @@ class {{ class }}Controller extends BaseController
      *
      * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $sortKey = request('sort_key', 'created_at');
         $sortType = request('sort_type', 'desc');
@@ -26,12 +26,12 @@ class {{ class }}Controller extends BaseController
 
 
         ${{ modelVariable }} = {{ model }}::query()
-                ->orderBy($sortKey, $sortType)
-                ->when($limit, function ($query, $limit) {
-                    return $query->limit($limit)->get();
-                }, function ($query) use ($perPage) {
-                    return $query->paginate($perPage);
-                });
+            ->orderBy($sortKey, $sortType)
+            ->when($limit, function ($query, $limit) {
+                return $query->limit($limit)->get();
+            }, function ($query) use ($perPage) {
+                return $query->paginate($perPage);
+            });
 
          return $this->success($limit ? {{ model }}ShowResource::collection(${{ modelVariable }}) : new {{ model }}Collection(${{ modelVariable }}));
     }
@@ -42,7 +42,7 @@ class {{ class }}Controller extends BaseController
      * @param {{ storeRequest }} $request
      * @return JsonResponse
      */
-    public function store({{ storeRequest }} $request)
+    public function store({{ storeRequest }} $request): JsonResponse
     {
         ${{ modelVariable }} = {{ model }}::create($request->all());
 
@@ -70,9 +70,14 @@ class {{ class }}Controller extends BaseController
      * @param {{ model }} ${{ modelVariable }}
      * @return JsonResponse
      */
-    public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }})
+    public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }}): JsonResponse
     {
+        $validated = $request->validated();
 
+        if (${{ modelVariable }}->update($validated)) {
+            return $this->success(new {{ model }}ShowResource(${{ modelVariable }}));
+        }
+        return $this->failed(__('app.errors.record-not-update'));
     }
 
     /**
