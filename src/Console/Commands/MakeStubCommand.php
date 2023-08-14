@@ -14,6 +14,7 @@ abstract class MakeStubCommand extends GeneratorCommand
     public array $fields =[];
 
     protected string $modelName;
+    protected string $routeName;
 
     public function __construct(Filesystem $files, $name, $fields)
     {
@@ -21,6 +22,7 @@ abstract class MakeStubCommand extends GeneratorCommand
         $this->name = $name;
         $this->fields = $fields;
         $this->modelName = $this->getSingularClassName($this->name);
+        $this->routeName = $this->getTableName($this->name);
     }
 
     public function handle(): void

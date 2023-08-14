@@ -64,10 +64,8 @@ class MakeRouteCommand extends MakeStubCommand
 
     private function addRoute()
     {
-        $lines = explode("\n", $this->contents);
-        $lastUseIndex = $this->lastLineOfUse('use ');
-        $lineToInsert = 'use App\\Models\\' . $this->modelName . ';';
-        array_splice($lines, $lastUseIndex + 1, 0, $lineToInsert);
-        $this->contents = implode("\n", $lines);
+        $lower = $this->routeName;
+        $line = "Route::resource('$lower'," . "$this->modelName" .'Controller::class);';
+        $this->contents .= "\n" . $line;
     }
 }
