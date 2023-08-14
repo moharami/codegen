@@ -68,7 +68,6 @@ class make extends Command
 
         $files = app()->make(Filesystem::class);
         $commands = [
-            new MakeMigrationCommand($files, $this->model, $this->fields),
             new MakeModelCommand($files, $this->model, $this->fields),
             new MakeControllerCommand($files, $this->model, $this->fields),
             new MakeSaveRequestCommand($files, $this->model, $this->fields),
@@ -76,9 +75,10 @@ class make extends Command
             new MakeResourceCommand($files, $this->model, $this->fields),
             new MakeResourceCollectionCommand($files, $this->model, $this->fields),
             new MakeFactoryCommand($files, $this->model, $this->fields),
-            new MakeSeederCommand($files, $this->model, $this->fields),
             new MakeRouteCommand($files, $this->model, $this->fields),
             new MakeExceptionCommand($files, $this->model, $this->fields),
+            new MakeMigrationCommand($files, $this->model, $this->fields),
+            new MakeSeederCommand($files, $this->model, $this->fields),
         ];
 
         foreach ($commands as $command) {

@@ -24,6 +24,7 @@ class MakeSaveRequestCommand extends MakeStubCommand
         $rule::setInput($this->fields);
         $rule::Output();
 
+
         return [
             'class' => $this->getSingularClassName($this->modelName) . $this->suffixFilename,
             'namespace' => $this->namespace,

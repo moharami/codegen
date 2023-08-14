@@ -23,6 +23,8 @@ class getResource
             return;
         }
         $content = "return [\n\t\t\t";
+        $content .= "'id' => " . '$this->id' .  ",\n\t\t\t";
+
         foreach ($this->fields as $key => $field) {
             $content .= "'" . $key . "'" . ' => $this->' . $key  .",\n\t\t\t";
         }

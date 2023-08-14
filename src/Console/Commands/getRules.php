@@ -58,7 +58,6 @@ class getRules
     protected static function getValidation($field, string $type): string
     {
         $validation = multiselect("Validation for $field", self::validateBaseOnType($type));
-
         if (in_array('min', $validation)) {
             $size = text("min size:$field ", 'E.g 5');
             $validation = self::replace('min', $size, $validation);
@@ -100,7 +99,7 @@ class getRules
     {
         $out = '';
         foreach ($output as $key => $item) {
-            $out .= '"' . $key . "'" . ' => ' . "'" . $item . '"' . ",\n\t\t\t";
+            $out .= '"' . $key . '"' . ' => ' . '"' . $item . '"' . ",\n\t\t\t";
         }
         return $out;
     }

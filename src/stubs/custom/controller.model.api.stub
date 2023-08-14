@@ -44,7 +44,7 @@ class {{ class }}Controller extends BaseController
      */
     public function store({{ storeRequest }} $request)
     {
-        ${{ modelVariable }} = {{ model }}::create($validated);
+        ${{ modelVariable }} = {{ model }}::create($request->all());
 
         if (${{ modelVariable }}) {
             return $this->success(new {{ model }}ShowResource(${{ modelVariable }}));
