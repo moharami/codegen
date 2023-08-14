@@ -48,10 +48,9 @@ class make extends Command
         )) {
             $field = text('Enter Your Field', 'E.g title');
 
-            $default = $this->setDefault($field);
             $type = select('Type field',
                 ['boolean', 'bigInteger', 'integer', 'smallInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedSmallInteger', 'decimal', 'double', 'string', 'longText', 'mediumText', 'text', 'tinyText', 'char', 'date', 'dateTime', 'dateTimeTz', 'time'],
-                $default,
+                $this->setDefault($field),
             );
 
             $integer_modifier = ['nullable', 'unsigned'];
