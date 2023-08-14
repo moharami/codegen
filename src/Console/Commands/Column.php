@@ -24,12 +24,10 @@ class Column extends makeArray
     {
         switch ($modifier){
             case 'nullable':
-                $output = "->nullable()";
+                return  "->nullable()";
                 break;
             case 'comment':
-                $output = "->comment('')";
-                break;
+                return "->comment('')";
         }
-        return $output;
     }
 }

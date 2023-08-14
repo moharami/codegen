@@ -43,25 +43,10 @@ class make extends Command
     {
 
         $this->model = text('Enter Your Model');
-        while (confirm(
-            label: 'Do you want add fields?',
-        )) {
+        while (confirm(label: 'Do you want add fields?',)) {
             $field = text('Enter Your Field', 'E.g title');
-
-            $type = select('Type field',
-                ['boolean', 'bigInteger', 'integer', 'smallInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedSmallInteger', 'decimal', 'double', 'string', 'longText', 'mediumText', 'text', 'tinyText', 'char', 'date', 'dateTime', 'dateTimeTz', 'time'],
-                $this->setDefault($field),
-            );
-
-            $integer_modifier = ['nullable', 'unsigned'];
-            $string_modifier = ['nullable', 'comment'];
-            $type_modifier = $type . '_modifier';
-            $modifier = multiselect('additional data', $$type_modifier);
-
-            $this->fields[$field] = [
-                'type' => $type,
-                'modifier' => $modifier
-            ];
+            FieldType::$field = $field;
+            $this->fields[$field] = FieldType::get();
         }
 
 
@@ -83,19 +68,12 @@ class make extends Command
         foreach ($commands as $command) {
             $command->handle();
         }
-        $this->info('done');
+        $this->info('Done');
     }
 
-    private function setDefault(string $fieldName)
-    {
-        if (strpos($fieldName, 'is_') === 0) {
-            return 'boolean';
-        } elseif (strpos($fieldName, '_date') !== false || strpos($fieldName, '_at') !== false) {
-            return 'date';
-        } else {
-            return 'string';
-        }
-    }
+
+
+
 
 
 }
