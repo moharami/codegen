@@ -9,8 +9,11 @@ To get started with the Laravel Prompt API Generator, please follow these steps:
 composer require this package
 
 ```bash
-composer require moharami/codegen
+composer require moharami/codegen --dev
 ```
+
+### Set your database variable
+open .env file and put your database variable that your program can connect to database correctly.
 
 ### Run the following command:
 
@@ -28,6 +31,21 @@ php artisan serve
 ```
 
 Your RESTful API is now up and running! You can access it by visiting http://localhost:8000 in your browser.
+
+### What files does it create?
+
+the list of files that this command creates is : 
+
+1. Model
+8. Migration (add fields you write in propmt)
+2. Controller
+3. BaseController
+4. Request(save and update) - for validation base on your input
+5. Reource
+6. Factory
+7. Seeder
+6. Route ( add a new route )
+7. Exception
 
 ### Contributing
 Contributions are welcome! If you encounter any issues or have any suggestions for the Laravel Prompt API Generator, feel free to open an issue or submit a pull request.
