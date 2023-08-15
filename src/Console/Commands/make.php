@@ -4,10 +4,7 @@ namespace Moharamiamir\codegen\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Pluralizer;
-use function Laravel\Prompts\multiselect;
 use function Laravel\Prompts\text;
-use function Laravel\Prompts\select;
 use function Laravel\Prompts\confirm;
 
 

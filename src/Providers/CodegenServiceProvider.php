@@ -15,9 +15,13 @@ class CodegenServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Registering package commands.
-        $this->commands([
-            make::class
-        ]);
+
+        if ($this->app->runningInConsole()) {
+            $this->commands(
+                commands: [
+                    make::class
+                ],
+            );
+        }
     }
 }
