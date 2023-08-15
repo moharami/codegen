@@ -1,6 +1,7 @@
 {
     "name": "moharamiamir/codegen",
     "description": "generate code for you",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Moharamiamir\\Codegen\\": "src/"
