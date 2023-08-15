@@ -4,7 +4,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Moharamiamir\\Codegen\\": "src/"
+            "Moharamiamir\\codegen\\": "src/"
         }
     },
     "authors": [
@@ -19,7 +19,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Moharamiamir\\Codegen\\Providers\\CodegenServiceProvider"
+                "Moharamiamir\\codegen\\Providers\\CodegenServiceProvider"
             ]
         }
     }
