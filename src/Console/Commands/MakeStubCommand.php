@@ -28,6 +28,7 @@ abstract class MakeStubCommand extends GeneratorCommand
     public function handle(): void
     {
         $path = $this->getDestinationPath();
+
         $this->makeDirectory($path);
         $contents = $this->getContent();
         $this->writeFile($path, $contents);
