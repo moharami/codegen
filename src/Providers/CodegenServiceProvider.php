@@ -6,7 +6,7 @@ namespace Moharamiamir\codegen\Providers;
 use Illuminate\Support\ServiceProvider;
 use Moharamiamir\codegen\Console\Commands\make;
 
-class CodeGenProvider extends ServiceProvider
+class CodegenServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.
@@ -15,7 +15,7 @@ class CodeGenProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        // Registering package commands.
         $this->commands([
             make::class
         ]);

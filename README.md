@@ -5,10 +5,6 @@ This project provides a fast and streamlined way to create a RESTful API using L
 ## Getting Started
 To get started with the Laravel Prompt API Generator, please follow these steps:
 
-### Clone the repository to your local machine:
-
-
-
 #### Install the necessary dependencies:
 composer require this package
 
