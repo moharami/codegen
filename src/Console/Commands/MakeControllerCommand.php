@@ -14,7 +14,7 @@ class MakeControllerCommand extends MakeStubCommand
     protected string $controllerNamespace = 'App\\Http\\Controllers\\Api\\V1';
     protected string $modelNamespace = 'App\\Models\\';
 
-    protected string $rootNamespace = 'App\\Http\\Controllers\\Api\\BaseController2';
+    protected string $rootNamespace = 'App\\Http\\Controllers\\Api\\BaseController';
     protected string $requestbase = 'App\\Http\\Requests\\';
     private string $modelUpdateRequest = 'UpdateRequest';
     private string $modelStoreRequest = 'StoreRequest';
